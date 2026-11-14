@@ -7,5 +7,6 @@ namespace KTC.Scene.Race
         public const float RESPAWN_DELAY = 0.5f;
 
         public const string CLEAR_MESSAGE = "GAME CLEAR!";
+        public const string RETRY_MESSAGE = "RETRY";
     }
 }

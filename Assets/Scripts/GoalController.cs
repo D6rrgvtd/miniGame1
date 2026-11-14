@@ -1,6 +1,7 @@
 
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace KTC.Scene.Race
 {
@@ -12,11 +13,16 @@ namespace KTC.Scene.Race
         [SerializeField]
         private TMP_Text _clearText = null;
 
+        [SerializeField]
+        private TMP_Text _retryText = null;
+
         private bool _isCleared = false;
 
         private void Start()
         {
             _clearPanel.SetActive(false);
+            _clearText.text = ConstRace.CLEAR_MESSAGE;
+            _retryText.text = ConstRace.RETRY_MESSAGE;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -38,8 +44,14 @@ namespace KTC.Scene.Race
 
             playerController.CompleteRace();
 
-            _clearText.text = ConstRace.CLEAR_MESSAGE;
             _clearPanel.SetActive(true);
+        }
+
+        public void RetryGame()
+        {
+            SceneManager.LoadScene(
+                SceneManager.GetActiveScene().buildIndex
+            );
         }
     }
 }

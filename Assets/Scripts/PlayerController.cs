@@ -12,14 +12,15 @@ namespace KTC.Scene.Race
         private const float JUMP_FORCE = 7f;
 
         private Rigidbody _rigidbody = null;
-        private Vector3 _startPosition = Vector3.zero;
+        private Vector3 _respawnPosition = Vector3.zero;
         private bool _isGrounded = false;
         private bool _isRespawning = false;
         private bool _isCleared = false;
+
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
-            _startPosition = transform.position;
+            _respawnPosition = transform.position;
         }
 
         private void Update()
@@ -117,16 +118,22 @@ namespace KTC.Scene.Race
 
             yield return new WaitForSeconds(ConstRace.RESPAWN_DELAY);
 
-            _rigidbody.position = new Vector3(
-                _startPosition.x,
-                ConstRace.RESPAWN_HEIGHT,
-                _startPosition.z
-            );
-
+            _rigidbody.position = _respawnPosition;
             _rigidbody.rotation = Quaternion.identity;
+
             _isGrounded = false;
             _isRespawning = false;
         }
+
+        public void SetCheckpoint(Vector3 checkpointPosition)
+        {
+            _respawnPosition = new Vector3(
+                checkpointPosition.x,
+                ConstRace.RESPAWN_HEIGHT,
+                checkpointPosition.z
+            );
+        }
+
         public void CompleteRace()
         {
             _isCleared = true;
@@ -135,6 +142,4 @@ namespace KTC.Scene.Race
             _rigidbody.angularVelocity = Vector3.zero;
         }
     }
-   
-
-    }
+}
